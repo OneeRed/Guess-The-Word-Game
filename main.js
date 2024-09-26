@@ -8,12 +8,18 @@ document.querySelector("footer").innerHTML = `${gameName} Game Created By Redoua
 let numberOfTries = 5;
 let numOfLetters = 6;
 let currentTry = 1;
+let numberOfHints = 2;
 
 // WORDS to guess
 let wordToGuess = "";
 const words = ["Create", "Update", "Delete", "Master", "Branch", "Mainly", "RedOne", "School", "Random"];
 wordToGuess = words[Math.floor(Math.random() * words.length)].toLowerCase();
 let messageArea = document.querySelector(".message");
+
+// Manage Hints
+document.querySelector(".hint span").innerHTML = numberOfHints;
+const hintButton = document.querySelector(".hint");
+hintButton.addEventListener("click", hintFunct);
 
 function generateInput() {
     const inputsContainer = document.querySelector(".inputs");
@@ -49,9 +55,11 @@ function generateInput() {
     inputs.forEach((input, index) => {
         // Convert Input To UpperCase
         input.addEventListener("input", function() {
-            this.value = this.value.toUpperCase();
-            const nextInput = inputs[index + 1];
-            if (nextInput) nextInput.focus();
+            if (this.value !== "") {
+                this.value = this.value.toUpperCase();
+                const nextInput = inputs[index + 1];
+                if (nextInput) nextInput.focus();
+            }
             // if (input.value.length === 1) {
             //     // input.style.backgroundColor = "#baceff";
             // }
@@ -67,17 +75,22 @@ function generateInput() {
             }
             if (event.key === "ArrowLeft") {
                 const previousInput = currentIndex - 1;
-                console.log(previousInput);
                 if (previousInput >= 0) inputs[previousInput].focus();
+            }         
+            if (event.key === "Enter") {
+                handleGuesses();
             }
+
         });
+
+
          
     })
 }
 
 const guessButton = document.querySelector(".check");
-
 guessButton.addEventListener("click", handleGuesses);
+
 
 console.log(wordToGuess);
 function handleGuesses() {
@@ -110,6 +123,9 @@ function handleGuesses() {
 
         messageArea.innerHTML = `You Win The Word Is <span>${wordToGuess}</span>`;
 
+        if (numberOfHints === 2) {
+            messageArea.innerHTML = `<p><span>Congratulations</span>You Didn't Use Hints</p>`;
+        }
         let allTries = document.querySelectorAll(".inputs > div");
 
         // Add Disabled Class On All Try Divs
@@ -118,6 +134,7 @@ function handleGuesses() {
 
         // Disable Guess Button
         guessButton.disabled = true;
+        hintButton.disabled = true;
     } else{
 
         document.querySelector(`.try-${currentTry}`).classList.add("disabled-inputs");
@@ -137,7 +154,9 @@ function handleGuesses() {
             // FOCUS NEXT INPUT
             el.children[1].focus();
         } else {
+            // Disable Buttons
             guessButton.disabled = true;
+            hintButton.disabled = true;
             messageArea.innerHTML = `You Lose, The Word To Guess Was <span>${wordToGuess}</span>`
         }
 
@@ -147,15 +166,62 @@ function handleGuesses() {
         // allTries[currentTry - 1].classList.add("disabled-inputs");
     }
 
-
-
 }
 
 
+// Hint Function
+function hintFunct() {
+    if (numberOfHints > 0) {
+        numberOfHints--;
+        document.querySelector(".hint span").innerHTML = numberOfHints;
+    }
+    if (numberOfHints === 0) {
+        hintButton.disabled = true;
+    }
+
+    const enabledInputs = document.querySelectorAll("input:not([disabled])");
+
+    // We chose empty enabled inputs to put the hint
+    const emptyEnabledInputs = Array.from(enabledInputs).filter((input) => input.value === "");
+
+    // console.log(emptyEnabledInputs);
+    // console.log(emptyEnabledInputs.length);
+    if (emptyEnabledInputs.length > 0) {
+        // Get A Random Index From The Empty Inputs Of The User
+        const randomIndex = Math.floor(Math.random() * emptyEnabledInputs.length);
+        const randomInput = emptyEnabledInputs[randomIndex];
+        const indexToFill = Array.from(enabledInputs).indexOf(randomInput);
+
+        if (indexToFill !== -1) {
+            randomInput.value = wordToGuess[indexToFill].toUpperCase();
+            randomInput.classList.add("yes-in-place");
+            randomInput.disabled = true;
+        }
+    }
+
+}
+
+function handleBackspace(event) {
+    if (event.key === "Backspace") {
+        const inputs = document.querySelectorAll("input:not([disabled])");
+        const currentIndex = Array.from(inputs).indexOf(document.activeElement);
+        const currentInput = inputs[currentIndex];
+
+        if (currentIndex > 0){
+            const previousInput = inputs [currentIndex - 1];
+            currentInput.value = "";
+            previousInput.focus();
+        } else {
+            // currentInput.value = "";
+        }
+    }
+
+}
+
+document.addEventListener("keydown", handleBackspace);
 // generateInput();
 window.onload = function() {
     generateInput();
 }
-
 
 // DO THE PANNEL TO SHOW THAT YOU WON, AND THE BACKGROUND EFFET
