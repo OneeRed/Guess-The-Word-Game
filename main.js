@@ -1,9 +1,107 @@
+// Creating HTML Elements(I Tried To Not Use HTML At All)
+headerDiv = document.createElement("div");
+h1 = document.createElement("h1");
+
+
 // Setting Game Name
 let gameName = "Guess The Word";
 gameName.style = "color:red; font-size:40px;"
 document.title = gameName;
-document.querySelector("h1").innerHTML = `Welcome, To <span>${gameName}</span>`;
-document.querySelector("footer").innerHTML = `${gameName} Game Created By <span>Redouane</span>`;
+h1.innerHTML = `Welcome, To <span>${gameName}</span>`;
+headerDiv.appendChild(h1);
+headerDiv.classList.add("header");
+document.body.appendChild(headerDiv);
+
+container = document.createElement("div");
+container.classList.add("container");
+
+guessGame = document.createElement("div");
+guessGame.classList.add("guess-game");
+
+gameArea = document.createElement("div");
+gameArea.classList.add("game-area");
+
+inputsDiv = document.createElement("div");
+inputsDiv.classList.add("inputs");
+
+controlDiv = document.createElement("div");
+controlDiv.classList.add("control");
+
+checkBtn = document.createElement("button");
+checkBtn.classList.add("check");
+checkBtn.prepend("Check Word");
+
+hintBtn = document.createElement("button");
+hintBtn.classList.add("hint");
+span = document.createElement("span");
+hintBtn.appendChild(span);
+hintBtn.append(" Hints");
+
+reloadBtn = document.createElement("button");
+reloadBtn.classList.add("reload");
+reloadBtn.prepend("Reload");
+
+controlDiv.appendChild(checkBtn);
+controlDiv.appendChild(hintBtn);
+controlDiv.appendChild(reloadBtn);
+
+messageDiv = document.createElement("div");
+messageDiv.classList.add("message");
+
+gameArea.appendChild(inputsDiv);
+gameArea.appendChild(controlDiv);
+gameArea.appendChild(messageDiv);
+
+keyColors = document.createElement("div");
+keyColors.classList.add("key-colors");
+h2 = document.createElement("h2");
+h2.prepend("Key Colors");
+keyColors.appendChild(h2);
+
+keyOne = document.createElement("div");
+keyOne.classList.add("key-color");
+inPlace = document.createElement("div");
+inPlace.classList.add("key", "in-place");
+keyTextOne = document.createElement("div");
+keyTextOne.classList.add("key-text");
+keyTextOne.prepend("Letter Is Correct And In Place");
+keyOne.appendChild(inPlace);
+keyOne.appendChild(keyTextOne);
+
+keyTwo = document.createElement("div");
+keyTwo.classList.add("key-color");
+notInPlace = document.createElement("div");
+notInPlace.classList.add("key", "not-in-place");
+keyTextTwo = document.createElement("div");
+keyTextTwo.classList.add("key-text");
+keyTextTwo.prepend("Letter Is Correct But Not In Place");
+keyTwo.appendChild(notInPlace);
+keyTwo.appendChild(keyTextTwo);
+
+keyThree = document.createElement("div");
+keyThree.classList.add("key-color");
+no = document.createElement("div");
+no.classList.add("key", "no");
+keyTextThree = document.createElement("div");
+keyTextThree.classList.add("key-text");
+keyTextThree.prepend("Letter Is Wrong");
+keyThree.appendChild(no);
+keyThree.appendChild(keyTextThree);
+
+keyColors.appendChild(keyOne);
+keyColors.appendChild(keyTwo);
+keyColors.appendChild(keyThree);
+
+guessGame.appendChild(gameArea);
+guessGame.appendChild(keyColors);
+container.appendChild(guessGame);
+
+document.body.appendChild(container);
+
+footer = document.createElement("footer");
+footer.innerHTML = `${gameName} Game Created By <span>Redouane</span>`;
+document.body.appendChild(footer);
+
 
 // Setting Game Options
 let numberOfTries = 5;
@@ -123,7 +221,7 @@ function handleGuesses() {
     guessGameDiv = document.querySelector(".guess-game");
     if (sucessGuess) {
 
-        messageArea.innerHTML = `You Win The Word Is <span>${wordToGuess}</span>`;
+        messageArea.innerHTML = `You Won! Congrats. The Word Is <span>${wordToGuess}</span>`;
 
         // Scroll To The Bottom Of The Page So That The Uses Sees The Message
         guessGameDiv.style.height = "100vh";
@@ -249,3 +347,8 @@ reloadBtn = document.querySelector(".reload");
 reloadBtn.onclick = () => window.location.reload();
 
 // DO THE PANNEL TO SHOW THAT YOU WON, AND THE BACKGROUND EFFET
+
+script = document.createElement("script");
+script.setAttribute("src", "main.js");
+document.body.appendChild(script);
+console.log("ok");

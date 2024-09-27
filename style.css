@@ -10,6 +10,7 @@ body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     position: relative;
+    background-color: #111828;
 }
 
 ::-webkit-scrollbar {
@@ -18,22 +19,22 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #3e094a;
+    background-color: #202938;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
+    background-color: #ffff20;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    /* background-color: var(--main-color-alt); */
+    background-color: #ffff20a6
 }
 
 
 .header {
     text-align: center;
     padding: 40px;
-    background-color: #202938;
+    /* background-color: #202938; */
     color: white;
     width: 100%;
     z-index: 1;
@@ -80,42 +81,21 @@ h1 {
     }
 }
 
-/* .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(./images/back.png);
-    background-size: cover;
-} */
-
-.overlay {
-    position: absolute;
-    content: "";
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #111828;
-}
 
 .guess-game {
     /* background-color: #0000006b; */
     position: relative;
     text-align: center;
-    /* width: 1000px; */
     margin: 0 auto;
     padding: 25px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    max-width: 100%;
-    /* min-height: 100vh; */
-    /* color: white; */
+
     .game-area {
         color: white;
         .inputs {
+            max-width: 100%;
             > div {
                 margin-bottom: 20px;
                 display: flex;
@@ -128,7 +108,7 @@ h1 {
                 }
             }
             .disabled-inputs {
-                opacity: 0.7;
+                opacity: 0.4;
                 /* I disabled pointer events but we can access it with tab */
                 pointer-events: none;
                 cursor: no-drop;
@@ -271,13 +251,14 @@ footer {
 } 
 
 
+/* media Query */
 
 @media (max-width: 991px) {
     .guess-game {
         flex-direction: column-reverse;
         margin: 50px 0;
         justify-content: center;
-
+        padding: 0px;
         .game-area {
             margin: auto;
             >div input:last-of-type {
@@ -291,6 +272,14 @@ footer {
     }
 }
 
+/* GRADIAN HEADER FOOTER */
+@media (max-width:767px) {
+    input {
+        width: 10px;
+        height: 10px;
+    }
+
+}
 
 /* Animations */
 
