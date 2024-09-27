@@ -1,8 +1,9 @@
 // Setting Game Name
 let gameName = "Guess The Word";
+gameName.style = "color:red; font-size:40px;"
 document.title = gameName;
-document.querySelector("h1").innerHTML = gameName;
-document.querySelector("footer").innerHTML = `${gameName} Game Created By Redouane`;
+document.querySelector("h1").innerHTML = `Welcome, To <span>${gameName}</span>`;
+document.querySelector("footer").innerHTML = `${gameName} Game Created By <span>Redouane</span>`;
 
 // Setting Game Options
 let numberOfTries = 5;
@@ -119,12 +120,20 @@ function handleGuesses() {
     }
 
     // Check If User Win Or Lose
+    guessGameDiv = document.querySelector(".guess-game");
     if (sucessGuess) {
 
         messageArea.innerHTML = `You Win The Word Is <span>${wordToGuess}</span>`;
 
+        // Scroll To The Bottom Of The Page So That The Uses Sees The Message
+        guessGameDiv.style.height = "100vh";
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth'
+        });
+
         if (numberOfHints === 2) {
-            messageArea.innerHTML = `<p><span>Congratulations</span>You Didn't Use Hints</p>`;
+            messageArea.innerHTML = `<p><span>Congratulations</span> You Didn't Use Hints</p>`;
         }
         let allTries = document.querySelectorAll(".inputs > div");
 
@@ -158,8 +167,14 @@ function handleGuesses() {
             guessButton.disabled = true;
             hintButton.disabled = true;
             messageArea.innerHTML = `You Lose, The Word To Guess Was <span>${wordToGuess}</span>`
+        
+            // Scroll To The Bottom Of The Page So That The Uses Sees The Message
+            guessGameDiv.style.height = "100vh";
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
         }
-
 
         // Add Disabled Class On All Try Divs
         // style => pointer-events: none;
@@ -173,7 +188,11 @@ function handleGuesses() {
 function hintFunct() {
     if (numberOfHints > 0) {
         numberOfHints--;
-        document.querySelector(".hint span").innerHTML = numberOfHints;
+        if (numberOfHints === 1) {
+            document.querySelector(".hint").innerHTML = `<span>${numberOfHints}</span> Hint`
+        } else {
+            document.querySelector(".hint span").innerHTML = numberOfHints;
+        }
     }
     if (numberOfHints === 0) {
         hintButton.disabled = true;
@@ -184,18 +203,18 @@ function hintFunct() {
     // We chose empty enabled inputs to put the hint
     const emptyEnabledInputs = Array.from(enabledInputs).filter((input) => input.value === "");
 
-    // console.log(emptyEnabledInputs);
-    // console.log(emptyEnabledInputs.length);
     if (emptyEnabledInputs.length > 0) {
         // Get A Random Index From The Empty Inputs Of The User
         const randomIndex = Math.floor(Math.random() * emptyEnabledInputs.length);
+        console.log(randomIndex);
         const randomInput = emptyEnabledInputs[randomIndex];
+        console.log(randomInput)
         const indexToFill = Array.from(enabledInputs).indexOf(randomInput);
-
+        console.log(indexToFill)
         if (indexToFill !== -1) {
             randomInput.value = wordToGuess[indexToFill].toUpperCase();
             randomInput.classList.add("yes-in-place");
-            randomInput.disabled = true;
+            // randomInput.disabled = true;
         }
     }
 
@@ -223,5 +242,10 @@ document.addEventListener("keydown", handleBackspace);
 window.onload = function() {
     generateInput();
 }
+
+
+// Relaod Button
+reloadBtn = document.querySelector(".reload");
+reloadBtn.onclick = () => window.location.reload();
 
 // DO THE PANNEL TO SHOW THAT YOU WON, AND THE BACKGROUND EFFET
