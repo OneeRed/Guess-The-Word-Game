@@ -29,12 +29,13 @@ controlDiv.classList.add("control");
 
 checkBtn = document.createElement("button");
 checkBtn.classList.add("check");
-checkBtn.prepend("Check Word");
+checkBtn.prepend("Check word");
 
 hintBtn = document.createElement("button");
 hintBtn.classList.add("hint");
 span = document.createElement("span");
 hintBtn.appendChild(span);
+/* <i class="fa-solid fa-bars"></i> */
 hintBtn.append(" Hints");
 
 reloadBtn = document.createElement("button");
@@ -55,7 +56,7 @@ gameArea.appendChild(messageDiv);
 keyColors = document.createElement("div");
 keyColors.classList.add("key-colors");
 h2 = document.createElement("h2");
-h2.prepend("Key Colors");
+h2.prepend("Key Colors Guide");
 keyColors.appendChild(h2);
 
 keyOne = document.createElement("div");
@@ -64,7 +65,7 @@ inPlace = document.createElement("div");
 inPlace.classList.add("key", "in-place");
 keyTextOne = document.createElement("div");
 keyTextOne.classList.add("key-text");
-keyTextOne.prepend("Letter Is Correct And In Place");
+keyTextOne.prepend("Letter is correct and in place");
 keyOne.appendChild(inPlace);
 keyOne.appendChild(keyTextOne);
 
@@ -74,7 +75,7 @@ notInPlace = document.createElement("div");
 notInPlace.classList.add("key", "not-in-place");
 keyTextTwo = document.createElement("div");
 keyTextTwo.classList.add("key-text");
-keyTextTwo.prepend("Letter Is Correct But Not In Place");
+keyTextTwo.prepend("Letter is correct but not in place");
 keyTwo.appendChild(notInPlace);
 keyTwo.appendChild(keyTextTwo);
 
@@ -84,7 +85,7 @@ no = document.createElement("div");
 no.classList.add("key", "no");
 keyTextThree = document.createElement("div");
 keyTextThree.classList.add("key-text");
-keyTextThree.prepend("Letter Is Wrong");
+keyTextThree.prepend("Letter is not in the word");
 keyThree.appendChild(no);
 keyThree.appendChild(keyTextThree);
 
@@ -104,14 +105,22 @@ document.body.appendChild(footer);
 
 
 // Setting Game Options
-let numberOfTries = 5;
+let numberOfTries = 6;
 let numOfLetters = 6;
 let currentTry = 1;
 let numberOfHints = 2;
 
 // WORDS to guess
 let wordToGuess = "";
-const words = ["Create", "Update", "Delete", "Master", "Branch", "Mainly", "RedOne", "School", "Random"];
+
+const words = [
+    "Create", "Update", "Delete", "Master", "Branch", "Mainly", "RedOne", "School", "Random", "Puzzle",
+    "Animal", "Banana", "Camera", "Doctor", "Future", "Garden", "Insect", "Jacket", "Cookie", "Sudoko",
+    "Laptop", "Market", "Number", "Office", "Pencil", "Butter", "Cheese", "Forest", "Column", "Player",
+    "Wallet", "Lonely", "Purple", "Flower", "Yellow", "Taylor", "Syntax", "Travel", "Custom", "Tablet",
+    "Hungry", "Quartz", "Object", "Python", "Router", "Switch", "Record", "Glitch", "Design", "Screen",
+    "Deploy", "GitHub", "Docker", "Review", "Server", "Client", "Aspect", "Widget", "Layout", "Button",
+  ];
 wordToGuess = words[Math.floor(Math.random() * words.length)].toLowerCase();
 let messageArea = document.querySelector(".message");
 
@@ -165,7 +174,6 @@ function generateInput() {
         });
         
         input.addEventListener("keydown", function(event) {
-            // console.log(event);
             // To get back the index of the target from the array of inputs
             const currentIndex = Array.from(inputs).indexOf(event.target);
             if (event.key === "ArrowRight") {
@@ -191,7 +199,6 @@ const guessButton = document.querySelector(".check");
 guessButton.addEventListener("click", handleGuesses);
 
 
-console.log(wordToGuess);
 function handleGuesses() {
     let sucessGuess = true;
     for (let i = 1; i <= numOfLetters; i++) {
@@ -224,7 +231,7 @@ function handleGuesses() {
         messageArea.innerHTML = `You Won! Congrats. The Word Is <span>${wordToGuess}</span>`;
 
         // Scroll To The Bottom Of The Page So That The Uses Sees The Message
-        guessGameDiv.style.height = "100vh";
+        // guessGameDiv.style.height = "100vh";
         window.scrollTo({
             top: document.documentElement.scrollHeight,
             behavior: 'smooth'
@@ -304,11 +311,8 @@ function hintFunct() {
     if (emptyEnabledInputs.length > 0) {
         // Get A Random Index From The Empty Inputs Of The User
         const randomIndex = Math.floor(Math.random() * emptyEnabledInputs.length);
-        console.log(randomIndex);
         const randomInput = emptyEnabledInputs[randomIndex];
-        console.log(randomInput)
         const indexToFill = Array.from(enabledInputs).indexOf(randomInput);
-        console.log(indexToFill)
         if (indexToFill !== -1) {
             randomInput.value = wordToGuess[indexToFill].toUpperCase();
             randomInput.classList.add("yes-in-place");
@@ -328,8 +332,6 @@ function handleBackspace(event) {
             const previousInput = inputs [currentIndex - 1];
             currentInput.value = "";
             previousInput.focus();
-        } else {
-            // currentInput.value = "";
         }
     }
 
@@ -346,9 +348,7 @@ window.onload = function() {
 reloadBtn = document.querySelector(".reload");
 reloadBtn.onclick = () => window.location.reload();
 
-// DO THE PANNEL TO SHOW THAT YOU WON, AND THE BACKGROUND EFFET
 
 script = document.createElement("script");
 script.setAttribute("src", "main.js");
 document.body.appendChild(script);
-console.log("ok");
