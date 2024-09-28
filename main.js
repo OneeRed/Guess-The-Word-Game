@@ -231,7 +231,6 @@ function handleGuesses() {
         messageArea.innerHTML = `You Won! Congrats. The Word Is <span>${wordToGuess}</span>`;
 
         // Scroll To The Bottom Of The Page So That The Uses Sees The Message
-        // guessGameDiv.style.height = "100vh";
         window.scrollTo({
             top: document.documentElement.scrollHeight,
             behavior: 'smooth'
@@ -274,16 +273,12 @@ function handleGuesses() {
             messageArea.innerHTML = `You Lose, The Word To Guess Was <span>${wordToGuess}</span>`
         
             // Scroll To The Bottom Of The Page So That The Uses Sees The Message
-            guessGameDiv.style.height = "100vh";
             window.scrollTo({
                 top: document.documentElement.scrollHeight,
                 behavior: 'smooth'
             });
         }
 
-        // Add Disabled Class On All Try Divs
-        // style => pointer-events: none;
-        // allTries[currentTry - 1].classList.add("disabled-inputs");
     }
 
 }
