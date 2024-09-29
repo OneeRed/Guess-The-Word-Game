@@ -34,14 +34,14 @@ body {
 .header {
     text-align: center;
     padding: 40px;
-    /* background-color: #202938; */
+    background-color: #111828;
     color: white;
     width: 100%;
-    z-index: 1;
     position: relative;
     border-bottom: 1px solid #444;
     box-shadow: 0px 1px 20px 0px #00000096;
     margin-bottom: 70px;
+    z-index: 3;
 }
 h1 {
     margin: 0;
@@ -95,7 +95,9 @@ h1 {
     align-items: flex-start;
     justify-content: space-between;
     min-height: 100vh;
+    /* z-index: 3; */
     .game-area {
+        z-index: 3;
         max-width: 100%;
         color: white;
         .inputs {
@@ -235,6 +237,7 @@ h1 {
         }
     }
     .key-colors {
+        z-index: 3;
         h2 {
             color: #ffff20;
         }
@@ -286,6 +289,7 @@ footer {
     left: 0;
     width: 100%;
     background-color: #111828;
+    z-index: 5;
     color: white;
     border-top: 1px solid #404040;
     span {
@@ -383,3 +387,13 @@ footer:after {
         transform: translateY(-15px);
     }
 }
+
+
+/* Particles */
+#particles-js{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+}
+
